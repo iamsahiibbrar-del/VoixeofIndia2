@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Behind the Hindi Voices</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#0b0d12;color:#f4f4f4;font-family:Arial,sans-serif}
+header{padding:20px 7%;display:flex;justify-content:space-between;align-items:center;background:#11141b;border-bottom:1px solid #242936}
+.logo{font-size:22px;font-weight:bold;color:#f0c674}
+nav a{color:#aaa;text-decoration:none;margin-left:20px}nav a:hover{color:#f0c674}
+.hero{padding:70px 7% 50px;background:linear-gradient(120deg,#141923,#202b3b)}
+.hero h1{font-size:42px;margin-bottom:15px}.hero h1 span{color:#f0c674}
+.hero p{color:#aaa;max-width:600px;line-height:1.7}
+.search-area{padding:30px 7%}.search-area input{width:100%;padding:15px;border-radius:8px;background:#171b24;border:1px solid #303746;color:white;outline:none;font-size:16px}
+.filters{display:flex;gap:10px;flex-wrap:wrap;padding:0 7% 30px}
+.filter-btn{background:#1a1f29;color:#ccc;border:1px solid #303746;padding:10px 18px;border-radius:20px;cursor:pointer}
+.filter-btn.active,.filter-btn:hover{background:#f0c674;color:#111}
+.section{padding:10px 7% 50px}.section-title{font-size:25px;margin-bottom:25px}
+.movie-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:22px}
+.movie-card{background:#161a22;border-radius:10px;overflow:hidden;cursor:pointer;transition:.3s;border:1px solid #252b35}
+.movie-card:hover{transform:translateY(-5px);border-color:#f0c674}
+.poster{height:250px;display:flex;justify-content:center;align-items:center;font-size:65px;background:linear-gradient(145deg,#27364b,#11151c)}
+.movie-info{padding:14px}.movie-info h3{font-size:16px;margin-bottom:8px}.movie-info p{font-size:13px;color:#999}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:100;overflow-y:auto;padding:30px 15px}
+.modal-content{background:#171b24;max-width:750px;margin:auto;padding:30px;border-radius:12px;border:1px solid #303746}
+.close{float:right;font-size:28px;cursor:pointer;color:#f0c674}
+.detail-poster{font-size:70px;text-align:center;padding:35px;background:linear-gradient(145deg,#27364b,#11151c);border-radius:10px;margin:20px 0}
+.modal-content h2{margin:15px 0}.modal-content p{color:#bbb;line-height:1.7;margin:12px 0}
+.modal-content h3{color:#f0c674;margin-top:25px;margin-bottom:10px}
+.cast-table{width:100%;border-collapse:collapse;margin-top:15px}.cast-table td{border-bottom:1px solid #303746;padding:12px 8px;font-size:14px}
+.cast-table td:last-child{color:#f0c674}
+footer{text-align:center;padding:30px;color:#777;background:#11141b;font-size:13px}
+@media(max-width:600px){header{flex-direction:column;gap:15px}nav a{margin:0 8px;font-size:13px}.hero h1{font-size:30px}.movie-grid{grid-template-columns:repeat(2,1fr);gap:12px}.poster{height:210px}.modal-content{padding:20px}}
+</style>
+</head>
+<body>
+<header><div class="logo">Behind the Hindi Voices</div><nav><a href="#">Home</a><a href="#movies">Movies</a><a href="#about">About</a></nav></header>
+<section class="hero"><h1>Discover the voices <span>behind the movies.</span></h1><p>Explore films, discover Hindi dubbing artists, learn about characters and celebrate the voices that bring movies to life.</p></section>
+<div class="search-area"><input type="text" id="searchInput" placeholder="Search movies, genres or years..."></div>
+<div class="filters"><button class="filter-btn active" data-category="All">All</button><button class="filter-btn" data-category="Animation">Animation</button><button class="filter-btn" data-category="Disney">Disney</button><button class="filter-btn" data-category="Hollywood">Hollywood</button></div>
+<section class="section" id="movies"><h2 class="section-title">Movie Collection</h2><div class="movie-grid" id="movieGrid"></div></section>
+<div class="modal" id="movieModal"><div class="modal-content"><span class="close" onclick="closeModal()">&times;</span><div id="modalBody"></div></div></div>
+<section class="section" id="about"><h2 class="section-title">About Us</h2><p style="color:#aaa;line-height:1.8">Behind the Hindi Voices is a movie archive dedicated to Hindi dubbing, voice artists, characters and cinema. Discover the voices behind your favourite movies.</p></section>
+<footer>Behind the Hindi Voices | A Movie &amp; Dubbing Archive</footer>
+<script>
+const movies=[
+{title:"Inside Out 2",year:2024,category:"Animation",emoji:"🧠",genre:"Animation, Adventure, Comedy",director:"Kelsey Mann",description:"Riley enters a new stage of life as new emotions arrive and change the way her mind works.",review:"A colourful and emotional animated adventure exploring emotions, growing up and self-discovery.",cast:[["Joy","Hindi Artist Name"],["Anxiety","Hindi Artist Name"],["Sadness","Hindi Artist Name"]]},
+{title:"Frozen II",year:2019,category:"Disney",emoji:"❄️",genre:"Animation, Fantasy, Adventure",director:"Chris Buck, Jennifer Lee",description:"Elsa, Anna and their friends journey beyond their kingdom to discover the origin of Elsa's powers.",review:"A visually beautiful fantasy adventure with music, mystery and family themes.",cast:[["Elsa","Hindi Artist Name"],["Anna","Hindi Artist Name"],["Olaf","Hindi Artist Name"]]},
+{title:"The Lion King",year:2019,category:"Disney",emoji:"🦁",genre:"Adventure, Drama",director:"Jon Favreau",description:"Simba's journey takes him from childhood to discovering his place in the circle of life.",review:"A visually striking adaptation of a classic story about responsibility and courage.",cast:[["Simba","Hindi Artist Name"],["Mufasa","Hindi Artist Name"],["Scar","Hindi Artist Name"]]},
+{title:"Spider-Man: No Way Home",year:2021,category:"Hollywood",emoji:"🕷️",genre:"Action, Adventure, Sci-Fi",director:"Jon Watts",description:"Peter Parker faces unexpected consequences when his identity becomes public and the boundaries between worlds begin to change.",review:"An entertaining superhero adventure full of action, emotion and surprises.",cast:[["Peter Parker","Hindi Artist Name"],["Doctor Strange","Hindi Artist Name"],["MJ","Hindi Artist Name"]]},
+{title:"Moana",year:2016,category:"Disney",emoji:"🌊",genre:"Animation, Adventure, Musical",director:"Ron Clements, John Musker",description:"A determined young voyager sails across the ocean to help restore balance to her island.",review:"An uplifting adventure featuring memorable music and a strong story of exploration.",cast:[["Moana","Hindi Artist Name"],["Maui","Hindi Artist Name"],["Gramma Tala","Hindi Artist Name"]]},
+{title:"Kung Fu Panda 4",year:2024,category:"Animation",emoji:"🐼",genre:"Animation, Action, Comedy",director:"Mike Mitchell",description:"Po faces a new adventure as he prepares for his next role and encounters a powerful new opponent.",review:"A light-hearted animated adventure with humour, action and familiar characters.",cast:[["Po","Hindi Artist Name"],["Zhen","Hindi Artist Name"],["Shifu","Hindi Artist Name"]]}
+];
+const movieGrid=document.getElementById("movieGrid");
+function displayMovies(list){movieGrid.innerHTML="";if(!list.length){movieGrid.innerHTML="<p>No movies found.</p>";return;}list.forEach(movie=>{const card=document.createElement("div");card.className="movie-card";card.innerHTML=`<div class="poster">${movie.emoji}</div><div class="movie-info"><h3>${movie.title}</h3><p>${movie.year} · ${movie.category}</p></div>`;card.onclick=()=>openMovie(movie);movieGrid.appendChild(card);});}
+document.getElementById("searchInput").addEventListener("input",function(){const query=this.value.toLowerCase();displayMovies(movies.filter(movie=>movie.title.toLowerCase().includes(query)||movie.category.toLowerCase().includes(query)||movie.genre.toLowerCase().includes(query)||movie.year.toString().includes(query)));});
+document.querySelectorAll(".filter-btn").forEach(button=>button.addEventListener("click",function(){document.querySelectorAll(".filter-btn").forEach(btn=>btn.classList.remove("active"));this.classList.add("active");const category=this.dataset.category;displayMovies(category==="All"?movies:movies.filter(movie=>movie.category===category));document.getElementById("searchInput").value="";}));
+function openMovie(movie){const castRows=movie.cast.map(person=>`<tr><td>${person[0]}</td><td>${person[1]}</td></tr>`).join("");document.getElementById("modalBody").innerHTML=`<div class="detail-poster">${movie.emoji}</div><h2>${movie.title} (${movie.year})</h2><p><strong>Genre:</strong> ${movie.genre}</p><p><strong>Director:</strong> ${movie.director}</p><h3>Synopsis</h3><p>${movie.description}</p><h3>Hindi Dubbing Cast</h3><table class="cast-table"><tr><td><strong>Character</strong></td><td><strong>Hindi Voice Artist</strong></td></tr>${castRows}</table><h3>Review</h3><p>${movie.review}</p>`;document.getElementById("movieModal").style.display="block";}
+function closeModal(){document.getElementById("movieModal").style.display="none";}
+window.onclick=function(event){const modal=document.getElementById("movieModal");if(event.target===modal)closeModal();};
+displayMovies(movies);
+</script>
+</body>
+</html>
